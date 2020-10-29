@@ -1,4 +1,4 @@
-{% set version = "1.6" %}
+{% set version = "1.1.1" %}
 
 package:
   name: jq
@@ -7,7 +7,7 @@ package:
 source:
   fn: jq-{{ version }}.tar.gz
   url: https://github.com/stedolan/jq/releases/download/jq-{{ version }}/jq-{{ version }}.tar.gz
-  sha256: 5de8c8e29aaa3fb9cc6b47bb27299f271354ebb72514e3accadc7d38b5bbaa72
+  sha256: 0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5
 
 build:
   number: 1000
