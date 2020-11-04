@@ -1,7 +1,7 @@
 {% set version = "1.6" %}
 
 package:
-  name: jq
+  name: jq-suite
   version: {{ version }}
 
 source:
@@ -10,21 +10,31 @@ source:
   sha256: 5de8c8e29aaa3fb9cc6b47bb27299f271354ebb72514e3accadc7d38b5bbaa72
 
 build:
-  number: 1000
-  skip: True  # [win]
+  number: 1
 
-requirements:
-  build:
-    - {{ compiler('c') }}
-    - make
-  host:
-    - oniguruma 6.9.*
-  run:
-    - oniguruma 6.9.*
+outputs:
+  - name: jq
+    script: build-jq.sh
+    script_interpreter: bash
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - make  # [not win]
+        - m2-base  # [win]
+        - m2-make  # [win]
+        - m2-autoconf  # [win]
+        - m2-automake-wrapper  # [win]
+        - m2-make  # [win]
+        - m2-libtool  # [win]
+        - m2w64-toolchain  # [win]
+      host:
+        - oniguruma 6.9.*  # [not win]
+      run:
+        - oniguruma 6.9.*  # [not win]
 
-test:
-  commands:
-    - jq --help  # [not win]
+    test:
+      commands:
+        - jq --help
 
 about:
   home: http://stedolan.github.io/jq/
@@ -35,3 +45,4 @@ about:
 extra:
   recipe-maintainers:
     - jakirkham
+    - mingwandroid
