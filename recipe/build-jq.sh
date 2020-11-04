@@ -7,7 +7,7 @@ if [[ $(uname) =~ M.* ]]; then
   pushd modules/oniguruma
     autoreconf -vfi
   popd
-  PREFIX=${PREFIX}/mingw64
+  PREFIX=${PREFIX}/Library/mingw-w64
 fi
 
 ./configure --disable-maintainer-mode  \
