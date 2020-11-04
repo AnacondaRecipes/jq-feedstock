@@ -18,7 +18,7 @@ outputs:
     script_interpreter: bash
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler('c') }}  # [not win]
         - make  # [not win]
         - m2-base  # [win]
         - m2-make  # [win]
