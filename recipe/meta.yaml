@@ -27,6 +27,7 @@ outputs:
         - m2-make  # [win]
         - m2-libtool  # [win]
         - m2w64-toolchain  # [win]
+        - libtool  # [not win]
       host:
         - oniguruma 6.9.*  # [not win]
       run:

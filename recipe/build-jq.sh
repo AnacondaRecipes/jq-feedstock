@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cp -r ${BUILD_PREFIX}/share/libtool/build-aux/config.* ./config
+
 chmod +x configure
 
 if [[ $(uname) =~ M.* ]]; then
