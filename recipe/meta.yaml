@@ -1,53 +1,54 @@
-{% set version = "1.6" %}
-
+{% set name = "jq" %}
+{% set version = "1.7.1" %}
 package:
-  name: jq-suite
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: jq-{{ version }}.tar.gz
-  url: https://github.com/stedolan/jq/releases/download/jq-{{ version }}/jq-{{ version }}.tar.gz
-  sha256: 5de8c8e29aaa3fb9cc6b47bb27299f271354ebb72514e3accadc7d38b5bbaa72
+  url: https://github.com/jqlang/{{ name }}/releases/download/{{ name }}-{{ version }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 478c9ca129fd2e3443fe27314b455e211e0d8c60bc8ff7df703873deeee580c2
 
 build:
-  # trigger 1
-  number: 1
-  missing_dso_whitelist:  # [s390x]
-    - $RPATH/ld64.so.1    # [s390x]
+  number: 0
+  # Skip the Windows support because m2- and m2w64- stuff will be replaced
+  # by msys2- and ucrt64- which are currently unavailable.
+  skip: true  # [win]
 
-outputs:
-  - name: jq
-    script: build-jq.sh
-    script_interpreter: bash
-    requirements:
-      build:
-        - {{ compiler('c') }}  # [not win]
-        - make  # [not win]
-        - m2-base  # [win]
-        - m2-make  # [win]
-        - m2-autoconf  # [win]
-        - m2-automake-wrapper  # [win]
-        - m2-make  # [win]
-        - m2-libtool  # [win]
-        - m2w64-toolchain  # [win]
-        - libtool  # [not win]
-      host:
-        - oniguruma 6.9.*  # [not win]
-      run:
-        - oniguruma 6.9.*  # [not win]
-        - m2w64-libwinpthread-git  # [win]
+requirements:
+  build:
+    - gnuconfig  # [unix]
+    - {{ compiler('c') }}
+    - make
+  host:
+    - oniguruma 6.9.*
+  run:
+    - oniguruma 6.9.*
 
-    test:
-      commands:
-        - jq --help
+test:
+  commands:
+    - jq --help  # [not win]
+    - test -f ${PREFIX}/bin/jq                  # [unix]
+    - test -f ${PREFIX}/include/jq.h            # [unix]
+    - test -f ${PREFIX}/include/jv.h            # [unix]
+    - test -f ${PREFIX}/lib/libjq.a            # [unix]
+    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}  # [unix]
+    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc  # [unix]
 
 about:
-  home: http://stedolan.github.io/jq/
+  home: https://jqlang.github.io/jq/
+  dev_url: https://github.com/jqlang/jq
+  doc_url: https://jqlang.github.io/jq/
   license: MIT
+  license_family: MIT
   license_file: COPYING
   summary: A command-line JSON processor.
+  description: |
+    jq is a lightweight and flexible command-line JSON processor
+    akin to sed,awk,grep, and friends for JSON data.
+    It's written in portable C and has zero runtime dependencies,
+    allowing you to easily slice, filter, map, and transform structured data.
 
 extra:
   recipe-maintainers:
     - jakirkham
-    - mingwandroid
+    - '0xbe7a'
