@@ -46,7 +46,8 @@ chmod +x configure
 	--with-oniguruma=$PREFIX \
 	--enable-shared \
 	--disable-docs \
-	--disable-valgrind
+	--disable-valgrind \
+  "${_CONFIG_OPTS[@]}"
 
 make -j${CPU_COUNT} ${VERBOSE_AT}
 
