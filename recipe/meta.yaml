@@ -15,13 +15,14 @@ build:
   number: 0
   # Skip the Windows support because m2- and m2w64- stuff will be replaced
   # by msys2- and ucrt64- which are currently unavailable.
-  skip: true  # [win]
+  #skip: true  # [win]
 
 requirements:
   build:
-    - gnuconfig  # [unix]
+    - gnuconfig              # [unix]
     - {{ compiler('c') }}
-    - make
+    - autotools_clang_conda  # [win]
+    - make                   # [unix]
   host:
     - oniguruma 6.9.*
   run:
