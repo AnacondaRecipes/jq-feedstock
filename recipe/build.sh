@@ -9,7 +9,7 @@ unset SUBDIR
 if [[ ${target_platform} == win-64 ]]
 then
 	export PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
-	export CFLAGS="-O2 -fstack-protector-all ${CFLAGS}"
+	export CFLAGS="-O2 -pthread -fstack-protector-all ${CFLAGS}"
 
 	if [[ ! -f "${PREFIX}/include/unistd.h" ]]; then
 		UNISTD_CREATED=1
