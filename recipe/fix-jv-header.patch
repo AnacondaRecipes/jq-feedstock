@@ -1,0 +1,27 @@
+From 4418787ac9b8a934fa4fbfb04dda7430310f5ee1 Mon Sep 17 00:00:00 2001
+From: Emanuele Torre <torreemanuele6@gmail.com>
+Date: Tue, 13 Aug 2024 10:50:37 +0200
+Subject: [PATCH] jv.h: define empty JV_{,V}PRINTF_LIKE macros if __GNUC__ is
+ not defined
+
+Fixes #3159
+
+Reported-by: Hsiang-Ying Fu
+---
+ src/jv.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/jv.h b/src/jv.h
+index 083509ec26..ef6f70121e 100644
+--- a/src/jv.h
++++ b/src/jv.h
+@@ -113,6 +113,9 @@ jv jv_array_indexes(jv, jv);
+   __attribute__ ((__format__( __printf__, fmt_arg_num, args_num)))
+ #define JV_VPRINTF_LIKE(fmt_arg_num) \
+   __attribute__ ((__format__( __printf__, fmt_arg_num, 0)))
++#else
++#define JV_PRINTF_LIKE(fmt_arg_num, args_num)
++#define JV_VPRINTF_LIKE(fmt_arg_num)
+ #endif
+ 
+ 
