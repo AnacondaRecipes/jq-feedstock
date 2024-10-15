@@ -25,7 +25,7 @@ then
 		--disable-docs \
 		--disable-valgrind
 
-	patch_libtool
+	patch_libtool && sed -e 's/"/\\"/g' -e 's/^/"/' -e 's/$$/\\n"/' src/builtin.jq > src/builtin.inc
 else
     export CFLAGS="-O2 -pthread -fstack-protector-all ${CFLAGS}"
     # Get an updated config.sub and config.guess
