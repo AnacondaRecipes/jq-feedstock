@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exo pipefail
+set -ex
 
 
 # unset the SUBDIR variable since it changes the behavior of make here
@@ -10,9 +10,6 @@ if [[ ${target_platform} == win-64 ]]
 then
 	export PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 	export CFLAGS="-O2 -fstack-protector-all ${CFLAGS}"
-    # Get an updated config.sub and config.guess
-	cp $BUILD_PREFIX/share/libtool/build-aux/config.* ./modules/oniguruma
-	cp $BUILD_PREFIX/share/libtool/build-aux/config.* .
 
 	# unistd.h is included in ${PREFIX}/include/zconf.h
 	if [[ ! -f "${PREFIX}/include/unistd.h" ]]; then
@@ -20,7 +17,7 @@ then
 		touch "${PREFIX}/include/unistd.h"
 	fi
 
-	autoreconf -iv
+	autoreconf -fiv
 
 	./configure \
 		--prefix=$PREFIX \
@@ -41,7 +38,7 @@ else
 		--prefix=$PREFIX \
 		--with-oniguruma=$PREFIX \
 		--enable-shared \
-		-disable-docs \
+		--disable-docs \
 		--disable-valgrind
 fi
 
