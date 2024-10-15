@@ -16,7 +16,7 @@ then
 		UNISTD_CREATED=1
 		touch "${PREFIX}/include/unistd.h"
 	fi
-	
+
 	autoreconf -iv
 
 	./configure \
@@ -26,7 +26,8 @@ then
 		--disable-docs \
 		--disable-valgrind \
 		"${_CONFIG_OPTS[@]}" || (cat config.log && false)
-
+	
+	patch_libtool
 else
     export CFLAGS="-O2 -pthread -fstack-protector-all ${CFLAGS}"
     # Get an updated config.sub and config.guess
