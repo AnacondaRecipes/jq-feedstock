@@ -23,6 +23,7 @@ requirements:
     - libtool                # [unix]
     - autotools_clang_conda  # [win]
     - make                   # [unix]
+    - patch                  # [linux and (x86_64 or s390x)]
   host:
     - oniguruma 6.9.*
   run:
@@ -34,8 +35,8 @@ test:
     - test -f ${PREFIX}/bin/jq                  # [unix]
     - test -f ${PREFIX}/include/jq.h            # [unix]
     - test -f ${PREFIX}/include/jv.h            # [unix]
-    - test -f ${PREFIX}/lib/libjq.a            # [unix]
-    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}  # [unix]
+    - test -f ${PREFIX}/lib/libjq.a             # [unix]
+    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}   # [unix]
     - test -f ${PREFIX}/lib/pkgconfig/libjq.pc  # [unix]
 
 about:
