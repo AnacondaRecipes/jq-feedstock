@@ -11,7 +11,6 @@ then
 	export PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 	export CFLAGS="-O2 -fstack-protector-all ${CFLAGS}"
 
-	# unistd.h is included in ${PREFIX}/include/zconf.h
 	if [[ ! -f "${PREFIX}/include/unistd.h" ]]; then
 		UNISTD_CREATED=1
 		touch "${PREFIX}/include/unistd.h"
@@ -49,3 +48,10 @@ make check ${VERBOSE_AT}
 fi
 
 make install -j${CPU_COUNT} ${VERBOSE_AT}
+
+
+if [[ "${target_platform}" == win-* ]]; then
+  if [[ "${UNISTD_CREATED}" == "1" ]]; then
+      rm -f "${PREFIX}/include/unistd.h"
+  fi
+fi
