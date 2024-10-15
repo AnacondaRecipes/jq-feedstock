@@ -29,25 +29,31 @@ then
       UNISTD_CREATED=1
       touch "${PREFIX}/include/unistd.h"
   fi
+  autoreconf -iv
 
-else
-  export CFLAGS="-O2 -pthread -fstack-protector-all ${CFLAGS}"
-
-fi
-# Get an updated config.sub and config.guess
-cp $BUILD_PREFIX/share/gnuconfig/config.* ./modules/oniguruma
-cp $BUILD_PREFIX/share/gnuconfig/config.* ./config
-
-chmod +x configure
-
-
-./configure \
+  ./configure \
 	--prefix=$PREFIX \
 	--with-oniguruma=$PREFIX \
 	--enable-shared \
 	--disable-docs \
 	--disable-valgrind \
-  "${_CONFIG_OPTS[@]}"
+  "${_CONFIG_OPTS[@]}" || (cat config.log && false)
+
+else
+  export CFLAGS="-O2 -pthread -fstack-protector-all ${CFLAGS}"
+    # Get an updated config.sub and config.guess
+	cp $BUILD_PREFIX/share/libtool/build-aux/config.* ./modules/oniguruma
+	cp $BUILD_PREFIX/share/libtool/build-aux/config.* .
+
+	chmod +x configure
+	./configure \
+	  --prefix=$PREFIX \
+	  --with-oniguruma=$PREFIX \
+	  --enable-shared \
+	  -disable-docs \
+	  --disable-valgrind \
+  	"${_CONFIG_OPTS[@]}"
+fi
 
 make -j${CPU_COUNT} ${VERBOSE_AT}
 

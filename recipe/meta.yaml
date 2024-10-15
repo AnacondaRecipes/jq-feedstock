@@ -19,8 +19,8 @@ build:
 
 requirements:
   build:
-    - gnuconfig              # [unix]
     - {{ compiler('c') }}
+    - libtool                # [unix]
     - autotools_clang_conda  # [win]
     - make                   # [unix]
   host:
