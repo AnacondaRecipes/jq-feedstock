@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exuo pipefail
+set -exo pipefail
 
 
 # unset the SUBDIR variable since it changes the behavior of make here
