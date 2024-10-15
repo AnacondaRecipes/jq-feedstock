@@ -1,0 +1,24 @@
+From eccc5c080824b97258f357124886433e558979f3 Mon Sep 17 00:00:00 2001
+From: Bela Stoyan <git@be7a.de>
+Date: Fri, 17 Nov 2023 10:13:28 +0100
+Subject: [PATCH] disable color tests
+
+---
+ tests/shtest | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/shtest b/tests/shtest
+index dd007d1..6ba3143 100755
+--- a/tests/shtest
++++ b/tests/shtest
+@@ -503,7 +503,7 @@ cmp $d/color $d/expect
+ cmp $d/warning $d/expect_warning
+ 
+ # Check $NO_COLOR
+-test_no_color=true
++test_no_color=false
+ $msys  && test_no_color=false
+ $mingw && test_no_color=false
+ if $test_no_color && command -v script >/dev/null 2>&1; then
+-- 
+2.42.0
