@@ -11,6 +11,7 @@ source:
     # Disable tests/shtest on linux-64 and linux-s390x
     - 0001-disable-color-tests.patch  # [linux and (x86_64 or s390x)]
     - fix-jv-header.patch
+    - fix-time-header.patch
 
 build:
   number: 0

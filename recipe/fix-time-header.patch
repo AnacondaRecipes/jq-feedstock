@@ -1,0 +1,52 @@
+From c76d0593a38e7aea427ed2a91c9a2c667ee9c9b9 Mon Sep 17 00:00:00 2001
+From: Florian Weimer <fweimer@redhat.com>
+Date: Wed, 14 Jun 2023 07:26:05 +0200
+Subject: [PATCH 1/2] configure.ac: Enable system extensions
+
+Use AC_USE_SYSTEM_EXTENSIONS to build with _GNU_SOURCE (and similar
+macros on non-GNU systems), to avoid an implicit declaration of the
+strptime function.  This improves compatibility with future compilers
+which do not support implicit function declarations.
+---
+ configure.ac | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/configure.ac b/configure.ac
+index 78383a6de3..e7ac4f403c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -16,6 +16,7 @@ AC_PROG_CPP_WERROR
+ AC_PROG_YACC
+ AC_OBJEXT
+ AC_EXEEXT
++AC_USE_SYSTEM_EXTENSIONS
+ LT_INIT([shared static win32-dll])
+ AM_PROG_CC_C_O
+ 
+
+From f347bad493eb0e250f6f6d71d23c1823e5e1a973 Mon Sep 17 00:00:00 2001
+From: Florian Weimer <fweimer@redhat.com>
+Date: Wed, 14 Jun 2023 07:26:05 +0200
+Subject: [PATCH 2/2] configure.ac: gettimeofday lives in <sys/time.h>
+
+The gettimeofday function is declared in <sys/time.h>, not <time.h>,
+according to POSIX and actual systems.  This avoids a configure
+probe failure with compilers which do not support implicit function
+declarations.
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index e7ac4f403c..6c08626eea 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -145,7 +145,7 @@ AC_FIND_FUNC([gmtime_r], [c], [#include <time.h>], [0, 0])
+ AC_FIND_FUNC([gmtime], [c], [#include <time.h>], [0])
+ AC_FIND_FUNC([localtime_r], [c], [#include <time.h>], [0, 0])
+ AC_FIND_FUNC([localtime], [c], [#include <time.h>], [0])
+-AC_FIND_FUNC([gettimeofday], [c], [#include <sys/time.h>], [0, 0])
++AC_FIND_FUNC([gettimeofday], [c], [#include <time.h>], [0, 0])
+ AC_CHECK_MEMBER([struct tm.tm_gmtoff], [AC_DEFINE([HAVE_TM_TM_GMT_OFF],1,[Define to 1 if the system has the tm_gmt_off field in struct tm])],
+                 [], [[#include <time.h>]])
+ AC_CHECK_MEMBER([struct tm.__tm_gmtoff], [AC_DEFINE([HAVE_TM___TM_GMT_OFF],1,[Define to 1 if the system has the __tm_gmt_off field in struct tm])],
