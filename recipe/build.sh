@@ -11,7 +11,12 @@ declare -a _CONFIG_OPTS=()
 if [[ ${target_platform} == win-64 ]]
 then
 	export PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
-
+	# unistd.h is included in ${PREFIX}/include/zconf.h
+	if [[ ! -f "${PREFIX}/include/unistd.h" ]]; then
+		UNISTD_CREATED=1
+		touch "${PREFIX}/include/unistd.h"
+	fi
+	
 	autoreconf -iv
 
 	./configure \
