@@ -21,6 +21,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - autoconf               # [unix]
+    - automake               # [unix]
     - libtool                # [unix]
     - autotools_clang_conda  # [win]
     - make                   # [unix]
