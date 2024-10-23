@@ -13,8 +13,7 @@ source:
 
 build:
   number: 0
-  # Skip the Windows support because m2- and m2w64- stuff will be replaced
-  # by msys2- and ucrt64- which are currently unavailable.
+  # Skip the Windows support because m2- and m2w64- stuff is deprecated on the defaults channel
   skip: true  # [win]
 
 requirements:
