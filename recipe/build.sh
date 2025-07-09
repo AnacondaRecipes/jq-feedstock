@@ -4,10 +4,7 @@ set -ex
 
 autoreconf -i
 
-export CFLAGS="-O2 -pthread -fPIC -fstack-protector-all ${CFLAGS} "
-
-# Add JQ_VERSION definition
-export CFLAGS="${CFLAGS} -DJQ_VERSION='\"${PKG_VERSION}\"'"
+export CFLAGS="-O2 -pthread -fPIE -fPIC -fstack-protector-all -DJQ_VERSION='\"${PKG_VERSION}\"' ${CFLAGS} "
 
 ./configure \
 	--prefix=$PREFIX \
