@@ -3,12 +3,16 @@
 set -ex
 
 # Get an updated config.sub and config.guess
-cp $BUILD_PREFIX/share/gnuconfig/config.* ./modules/oniguruma
-cp $BUILD_PREFIX/share/gnuconfig/config.* ./config
+#cp $BUILD_PREFIX/share/gnuconfig/config.* ./modules/oniguruma
+#cp $BUILD_PREFIX/share/gnuconfig/config.* ./config
 
-chmod +x configure
+#chmod +x configure
+autoreconf -i
 
-export CFLAGS="-O2 -pthread -fstack-protector-all ${CFLAGS}"
+export CFLAGS="-O2 -pthread -fPIC -fstack-protector-all ${CFLAGS} "
+
+# Add JQ_VERSION definition
+export CFLAGS="${CFLAGS} -DJQ_VERSION='\"${PKG_VERSION}\"'"
 
 ./configure \
 	--prefix=$PREFIX \

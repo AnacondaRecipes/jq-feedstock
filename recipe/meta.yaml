@@ -1,27 +1,21 @@
 {% set name = "jq" %}
-{% set version = "1.7.1" %}
+{% set version = "1.8.1" %}
 package:
-  name: {{ name }}
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/jqlang/{{ name }}/releases/download/{{ name }}-{{ version }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 478c9ca129fd2e3443fe27314b455e211e0d8c60bc8ff7df703873deeee580c2
-  patches:                            # [linux and (x86_64 or s390x)]
-    # Disable tests/shtest on linux-64 and linux-s390x
-    - 0001-disable-color-tests.patch  # [linux and (x86_64 or s390x)]
+  url: https://github.com/{{ name }}lang/{{ name }}/releases/download/{{ name }}-{{ version }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0
 
 build:
   number: 0
   # Skip the Windows support because m2- and m2w64- stuff is deprecated on the defaults channel
-  skip: true  # [win]
+  skip: True  # [win]
 
 requirements:
   build:
-    - gnuconfig  # [unix]
     - {{ compiler('c') }}
-    - make
-    - patch # [linux and (x86_64 or s390x)]
   host:
     - oniguruma 6.9.*
   run:
@@ -29,27 +23,27 @@ requirements:
 
 test:
   commands:
-    - jq --help  # [not win]
-    - test -f ${PREFIX}/bin/jq                  # [unix]
-    - test -f ${PREFIX}/include/jq.h            # [unix]
-    - test -f ${PREFIX}/include/jv.h            # [unix]
-    - test -f ${PREFIX}/lib/libjq.a            # [unix]
-    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}  # [unix]
-    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc  # [unix]
+    - jq --help
+    - test -f ${PREFIX}/bin/jq
+    - test -f ${PREFIX}/include/jq.h
+    - test -f ${PREFIX}/include/jv.h
+    - test -f ${PREFIX}/lib/libjq.a
+    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}
+    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc
 
 about:
-  home: https://jqlang.github.io/jq/
-  dev_url: https://github.com/jqlang/jq
-  doc_url: https://jqlang.github.io/jq/
+  home: https://github.com/jqlang/jq
+  summary: A command-line JSON processor.
   license: MIT
   license_family: MIT
   license_file: COPYING
-  summary: A command-line JSON processor.
   description: |
     jq is a lightweight and flexible command-line JSON processor
     akin to sed,awk,grep, and friends for JSON data.
     It's written in portable C and has zero runtime dependencies,
     allowing you to easily slice, filter, map, and transform structured data.
+  dev_url: https://github.com/jqlang/jq
+  doc_url: https://jqlang.github.io/jq
 
 extra:
   recipe-maintainers:
