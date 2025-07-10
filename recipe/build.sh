@@ -2,13 +2,9 @@
 
 set -ex
 
-# Get an updated config.sub and config.guess
-cp $BUILD_PREFIX/share/gnuconfig/config.* ./modules/oniguruma
-cp $BUILD_PREFIX/share/gnuconfig/config.* ./config
+autoreconf -i
 
-chmod +x configure
-
-export CFLAGS="-O2 -pthread -fstack-protector-all ${CFLAGS}"
+export CFLAGS="-O2 -pthread -fPIE -fPIC -fstack-protector-all -DJQ_VERSION='\"${PKG_VERSION}\"' ${CFLAGS} "
 
 ./configure \
 	--prefix=$PREFIX \

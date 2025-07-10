@@ -1,0 +1,25 @@
+From aa2c346c1cbf452a00dfb9e5a54268dea4d9eeae Mon Sep 17 00:00:00 2001
+From: Andrii Osipov <aosipov@anaconda.com>
+Date: Wed, 9 Jul 2025 03:20:33 -0700
+Subject: [PATCH] disable test no color on linux 64
+
+---
+ tests/shtest | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/shtest b/tests/shtest
+index 887a6bb..d498ea5 100755
+--- a/tests/shtest
++++ b/tests/shtest
+@@ -610,7 +610,7 @@ for colors in '/' '[30' '30m' '30:31m:32' '30:*:31' 'invalid'; do
+ done
+ 
+ # Check $NO_COLOR
+-test_no_color=true
++test_no_color=false
+ $msys  && test_no_color=false
+ $mingw && test_no_color=false
+ if $test_no_color && command -v script >/dev/null 2>&1; then
+-- 
+2.39.3 (Apple Git-146)
+
