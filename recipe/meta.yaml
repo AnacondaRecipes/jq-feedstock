@@ -15,7 +15,7 @@ source:
   sha256: 23cb60a1354eed6bcc8d9b9735e8c7b388cd1fdcb75726b93bc299ef22dd9334  # [win]
 
 build:
-  number: 0
+  number: 1
   ignore_run_exports:  # [win]
     - vc14_runtime  # [win]
 
