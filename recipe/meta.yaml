@@ -15,31 +15,30 @@ build:
 
 requirements:
   build:
-    - patch  # [linux and x86_64]
-    - {{ compiler('c') }}
-    - autoconf  # [unix]
-    - automake  # [unix]
-    - libtool   # [unix]
-    - make      # [unix]
-    - msys2-autoconf2.72  # [win-64]
-    - msys2-automake1.17  # [win-64]
-    - msys2-libtool       # [win-64]
-    - msys2-make          # [win-64]
+    - {{ compiler('c') }}  # [not win]
+    - make  # [not win]
+    - msys2-base  # [win]
+    - msys2-make  # [win]
+    - msys2-autoconf-wrapper  # [win]
+    - msys2-automake-wrapper  # [win]
+    - msys2-libtool  # [win]
+    - ucrt64-gcc-toolchain  # [win]
+    - libtool  # [not win]
   host:
-    - oniguruma 6.9.*
+    - oniguruma 6.9.*  # [not win]
   run:
-    - oniguruma 6.9.*
+    - oniguruma 6.9.*  # [not win]
+    - ucrt64-libwinpthread-git  # [win]
 
 test:
   commands:
     - jq --help
-    - test -f ${PREFIX}/bin/jq
-    - test -f ${PREFIX}/include/jq.h
-    - test -f ${PREFIX}/include/jv.h
-    - test -f ${PREFIX}/lib/libjq.a
-    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}
-    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc
-
+    - test -f ${PREFIX}/bin/jq  # [not win]
+    - test -f ${PREFIX}/include/jq.h  # [not win]
+    - test -f ${PREFIX}/include/jv.h  # [not win]
+    - test -f ${PREFIX}/lib/libjq.a  # [not win]
+    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}  # [not win]
+    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc  # [not win]
 about:
   home: https://github.com/jqlang/jq
   summary: A command-line JSON processor.
