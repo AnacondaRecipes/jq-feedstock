@@ -4,7 +4,8 @@ setlocal EnableDelayedExpansion
 copy "%RECIPE_DIR%\build_win.sh" .
 if errorlevel 1 exit /b 1
 
-FOR /F "delims=" %%i IN ('cygpath.exe -u "%PREFIX%"') DO set "PREFIX=%%i/Library/ucrt64"
+FOR /F "delims=" %%i IN ('cygpath.exe -u "%PREFIX%"') DO set "UCRT_PREFIX=%%i/Library/ucrt64"
+FOR /F "delims=" %%i IN ('cygpath.exe -u "%PREFIX%"') DO set "PREFIX=%%i"
 set SRC_DIR=%SRC_DIR:\=/%
 
 set MSYSTEM=MINGW%ARCH%
