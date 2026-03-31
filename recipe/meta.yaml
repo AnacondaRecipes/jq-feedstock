@@ -15,30 +15,32 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [not win]
-    - make  # [not win]
-    - msys2-base  # [win]
-    - msys2-make  # [win]
+    - {{ compiler('c') }}  # [unix]
+    - make      # [unix]
+    - autoconf  # [unix]
+    - automake  # [unix]
+    - libtool   # [unix]
+    - msys2-base              # [win]
+    - msys2-make              # [win]
     - msys2-autoconf-wrapper  # [win]
     - msys2-automake-wrapper  # [win]
-    - msys2-libtool  # [win]
-    - ucrt64-gcc-toolchain  # [win]
-    - libtool  # [not win]
+    - msys2-libtool           # [win]
+    - ucrt64-gcc-toolchain    # [win]
   host:
-    - oniguruma 6.9.*  # [not win]
+    - oniguruma 6.9.*  # [unix]
   run:
-    - oniguruma 6.9.*  # [not win]
+    - oniguruma 6.9.*  # [unix]
     - ucrt64-libwinpthread-git  # [win]
 
 test:
   commands:
     - jq --help
-    - test -f ${PREFIX}/bin/jq  # [not win]
-    - test -f ${PREFIX}/include/jq.h  # [not win]
-    - test -f ${PREFIX}/include/jv.h  # [not win]
-    - test -f ${PREFIX}/lib/libjq.a  # [not win]
-    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}  # [not win]
-    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc  # [not win]
+    - test -f ${PREFIX}/bin/jq  # [unix]
+    - test -f ${PREFIX}/include/jq.h  # [unix]
+    - test -f ${PREFIX}/include/jv.h  # [unix]
+    - test -f ${PREFIX}/lib/libjq.a  # [unix]
+    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}  # [unix]
+    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc  # [unix]
 about:
   home: https://github.com/jqlang/jq
   summary: A command-line JSON processor.
