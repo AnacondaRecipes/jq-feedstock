@@ -12,6 +12,8 @@ source:
 
 build:
   number: 1
+  missing_dso_whitelist:
+    - */libwinpthread-1.dll  # [win]
 
 requirements:
   build:
