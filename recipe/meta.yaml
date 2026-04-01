@@ -30,6 +30,7 @@ requirements:
     - oniguruma 6.9.*
   run:
     - oniguruma 6.9.*  # [unix]
+    - ucrt64-libwinpthread-git  # [win]
 
 test:
   commands:
