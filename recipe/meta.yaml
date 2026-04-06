@@ -11,6 +11,7 @@ source:
     - patches/0001-disable-test-no-color-on-linux-64.patch # [linux and x86_64]
 
   # Skip the Windows build because m2- and m2w64- stuff is deprecated on the defaults channel, binary repack used instead.
+  # Use the same source repo as used by MSYS2, https://github.com/msys2/MINGW-packages/blob/master/mingw-w64-jq/PKGBUILD#L21 
   url: https://github.com/{{ name }}lang/{{ name }}/releases/download/{{ name }}-{{ version }}/{{ name }}-win64.exe  # [win]
   sha256: 23cb60a1354eed6bcc8d9b9735e8c7b388cd1fdcb75726b93bc299ef22dd9334  # [win]
 
@@ -32,6 +33,7 @@ requirements:
 test:
   commands:
     - jq --help
+    - conda info --json | jq .platform
     - test -f ${PREFIX}/bin/jq  # [unix]
     - test -f ${PREFIX}/include/jq.h  # [unix]
     - test -f ${PREFIX}/include/jv.h  # [unix]
