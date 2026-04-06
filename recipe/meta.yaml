@@ -5,38 +5,41 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/{{ name }}lang/{{ name }}/releases/download/{{ name }}-{{ version }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0
-  patches:
+  url: https://github.com/{{ name }}lang/{{ name }}/releases/download/{{ name }}-{{ version }}/{{ name }}-{{ version }}.tar.gz  # [unix]
+  sha256: 2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0  # [unix]
+  patches:  # [unix]
     - patches/0001-disable-test-no-color-on-linux-64.patch # [linux and x86_64]
 
+  # Skip the Windows build because m2- and m2w64- stuff is deprecated on the defaults channel, binary repack used instead.
+  # Use the same source repo as used by MSYS2, https://github.com/msys2/MINGW-packages/blob/master/mingw-w64-jq/PKGBUILD#L21 
+  url: https://github.com/{{ name }}lang/{{ name }}/releases/download/{{ name }}-{{ version }}/{{ name }}-win64.exe  # [win]
+  sha256: 23cb60a1354eed6bcc8d9b9735e8c7b388cd1fdcb75726b93bc299ef22dd9334  # [win]
+
 build:
-  number: 0
-  # Skip the Windows support because m2- and m2w64- stuff is deprecated on the defaults channel
-  skip: True  # [win]
+  number: 1
 
 requirements:
   build:
-    - patch  # [linux and x86_64]
-    - {{ compiler('c') }}
-    - autoconf
-    - automake
-    - libtool
-    - make
+    - {{ compiler('c') }}  # [unix]
+    - autoconf             # [unix]
+    - automake             # [unix]
+    - libtool              # [unix]
+    - make                 # [unix]
   host:
-    - oniguruma 6.9.*
+    - oniguruma 6.9.*  # [unix]
   run:
-    - oniguruma 6.9.*
+    - oniguruma 6.9.*  # [unix]
 
 test:
   commands:
     - jq --help
-    - test -f ${PREFIX}/bin/jq
-    - test -f ${PREFIX}/include/jq.h
-    - test -f ${PREFIX}/include/jv.h
-    - test -f ${PREFIX}/lib/libjq.a
-    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}
-    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc
+    - conda info --json | jq .platform
+    - test -f ${PREFIX}/bin/jq  # [unix]
+    - test -f ${PREFIX}/include/jq.h  # [unix]
+    - test -f ${PREFIX}/include/jv.h  # [unix]
+    - test -f ${PREFIX}/lib/libjq.a  # [unix]
+    - test -f ${PREFIX}/lib/libjq${SHLIB_EXT}  # [unix]
+    - test -f ${PREFIX}/lib/pkgconfig/libjq.pc  # [unix]
 
 about:
   home: https://github.com/jqlang/jq
